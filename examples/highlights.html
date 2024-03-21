@@ -115,9 +115,9 @@
 
     // Apply a class to selected text
     rendition.on("selected", function(cfiRange, contents) {
-      rendition.annotations.highlight(cfiRange, {}, (e) => {
+      rendition.annotations.underline(cfiRange, {}, (e) => {
         console.log("highlight clicked", e.target);
-      });
+      }, '', {});
       contents.window.getSelection().removeAllRanges();
 
     });
@@ -156,7 +156,8 @@
           remove.textContent = "remove";
           remove.href = "#" + cfiRange;
           remove.onclick = function () {
-            rendition.annotations.remove(cfiRange);
+            rendition.annotations.remove(cfiRange, 'highlight');
+            li.remove();
             return false;
           };
 

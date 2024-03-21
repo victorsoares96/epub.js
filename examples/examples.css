@@ -124,7 +124,7 @@ body {
 }
 
 .arrow:active, .navlink:hover {
-  color: #000;
+  color: green;
 }
 
 #book-wrapper {
