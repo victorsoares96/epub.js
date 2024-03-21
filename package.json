@@ -1,5 +1,5 @@
 {
-  "name": "epubjs",
+  "name": "@victorsoares96/epubjs",
   "version": "0.3.93",
   "description": "Parse and Render Epubs",
   "main": "lib/index.js",
@@ -8,6 +8,10 @@
   "repository": "https://github.com/futurepress/epub.js",
   "directories": {
     "test": "test"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "scripts": {
     "test": "karma start --single-run --browsers ChromeHeadlessNoSandbox",
