@@ -99,6 +99,9 @@ class Annotations {
 				}
 			});
 
+			this.highlights = this.highlights.filter(item => item.type !== type && item.cfiRange !== cfiRange);
+			this.underlines = this.underlines.filter(item => item.type !== type && item.cfiRange !== cfiRange);
+			this.marks = this.marks.filter(item => item.type !== type && item.cfiRange !== cfiRange);
 			delete this._annotations[hash];
 		}
 	}
