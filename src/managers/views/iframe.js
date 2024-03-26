@@ -603,7 +603,7 @@ class IframeView {
 		return this.elementBounds;
 	}
 
-	highlight(cfiRange, data={}, cb, className = "epubjs-hl", styles = {}) {
+	highlight(cfiRange, data={}, cb, className = "epubjs-hl", styles = {}, cfiRangeText = "") {
 		if (!this.contents) {
 			return;
 		}
@@ -623,7 +623,7 @@ class IframeView {
 		let m = new Highlight(range, className, data, attributes);
 		let h = this.pane.addMark(m);
 
-		this.highlights[cfiRange] = { "mark": h, "element": h.element, "listeners": [emitter, cb] };
+		this.highlights[cfiRange] = { "mark": h, "element": h.element, "listeners": [emitter, cb], cfiRangeText };
 
 		h.element.setAttribute("ref", className);
 		h.element.addEventListener("click", emitter);
@@ -636,7 +636,7 @@ class IframeView {
 		return h;
 	}
 
-	underline(cfiRange, data={}, cb, className = "epubjs-ul", styles = {}) {
+	underline(cfiRange, data={}, cb, className = "epubjs-ul", styles = {}, cfiRangeText = "") {
 		if (!this.contents) {
 			return;
 		}
@@ -655,7 +655,7 @@ class IframeView {
 		let m = new Underline(range, className, data, attributes);
 		let h = this.pane.addMark(m);
 
-		this.underlines[cfiRange] = { "mark": h, "element": h.element, "listeners": [emitter, cb] };
+		this.underlines[cfiRange] = { "mark": h, "element": h.element, "listeners": [emitter, cb], cfiRangeText };
 
 		h.element.setAttribute("ref", className);
 		h.element.addEventListener("click", emitter);
@@ -668,7 +668,7 @@ class IframeView {
 		return h;
 	}
 
-	mark(cfiRange, data={}, cb, className = "epubjs-mk", styles = {}) {
+	mark(cfiRange, data={}, cb, className = "epubjs-mk", styles = {}, cfiRangeText = "") {
 		if (!this.contents) {
 			return;
 		}
@@ -722,7 +722,7 @@ class IframeView {
 
 		this.element.appendChild(mark);
 
-		this.marks[cfiRange] = { "element": mark, "range": range, "listeners": [emitter, cb] };
+		this.marks[cfiRange] = { "element": mark, "range": range, "listeners": [emitter, cb], cfiRangeText };
 
 		return parent;
 	}

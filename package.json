@@ -1,6 +1,6 @@
 {
   "name": "@victorsoares96/epubjs",
-  "version": "0.3.99",
+  "version": "0.3.99-for-epubjs-react-native-lib",
   "description": "Parse and Render Epubs",
   "main": "lib/index.js",
   "module": "src/index.js",

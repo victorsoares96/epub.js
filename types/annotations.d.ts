@@ -4,15 +4,15 @@ import View from "./managers/view";
 export default class Annotations {
   constructor(rendition: Rendition);
 
-  add(type: string, cfiRange: string, data?: object, cb?: Function, className?: string, styles?: object): Annotation;
+  add(type: string, cfiRange: string, data?: object, cb?: Function, className?: string, styles?: object, cfiRangeText?: string): Annotation;
 
   remove(cfiRange: string, type: string): void;
 
-  highlight(cfiRange: string, data?: object, cb?: Function, className?: string, styles?: object): void;
+  highlight(cfiRange: string, data?: object, cb?: Function, className?: string, styles?: object, cfiRangeText?: string): void;
 
-	underline(cfiRange: string, data?: object, cb?: Function, className?: string, styles?: object): void;
+	underline(cfiRange: string, data?: object, cb?: Function, className?: string, styles?: object, cfiRangeText?: string): void;
 
-	mark(cfiRange: string, data?: object, cb?: Function, className?: string, styles?: object): void;
+	mark(cfiRange: string, data?: object, cb?: Function, className?: string, styles?: object, cfiRangeText?: string): void;
 
   each(): Array<Annotation>
 
@@ -29,6 +29,7 @@ declare class Annotation {
   constructor(options: {
 		type: string,
 		cfiRange: string,
+    cfiRangeText?: string,
 		data?: object,
 		sectionIndex?: number,
 		cb?: Function,

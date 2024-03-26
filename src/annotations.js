@@ -29,9 +29,10 @@ class Annotations {
 	 * @param {function} [cb] Callback after annotation is added
 	 * @param {string} className CSS class to assign to annotation
 	 * @param {object} styles CSS styles to assign to annotation
+	 * @param {EpubCFI} cfiRangeText EpubCFI range to attach annotation to
 	 * @returns {Annotation} annotation
 	 */
-	add (type, cfiRange, data, cb, className, styles) {
+	add (type, cfiRange, data, cb, className, styles, cfiRangeText) {
 		let hash = encodeURI(cfiRange + type);
 		let cfi = new EpubCFI(cfiRange);
 		let sectionIndex = cfi.spinePos;
@@ -42,7 +43,8 @@ class Annotations {
 			sectionIndex,
 			cb,
 			className,
-			styles
+			styles,
+			cfiRangeText,
 		});
 
 		this._annotations[hash] = annotation;
@@ -130,9 +132,10 @@ class Annotations {
 	 * @param {function} cb Callback after annotation is clicked
 	 * @param {string} className CSS class to assign to annotation
 	 * @param {object} styles CSS styles to assign to annotation
+	 * @param {EpubCFI} cfiRangeText EpubCFI range text to attach annotation to
 	 */
-	highlight (cfiRange, data, cb, className, styles) {
-		return this.add("highlight", cfiRange, data, cb, className, styles);
+	highlight (cfiRange, data, cb, className, styles, cfiRangeText) {
+		return this.add("highlight", cfiRange, data, cb, className, styles, cfiRangeText);
 	}
 
 	/**
@@ -142,9 +145,10 @@ class Annotations {
 	 * @param {function} cb Callback after annotation is clicked
 	 * @param {string} className CSS class to assign to annotation
 	 * @param {object} styles CSS styles to assign to annotation
+	 * @param {EpubCFI} cfiRangeText EpubCFI range text to attach annotation to
 	 */
-	underline (cfiRange, data, cb, className, styles) {
-		return this.add("underline", cfiRange, data, cb, className, styles);
+	underline (cfiRange, cfiRangeText, data, cb, className, styles) {
+		return this.add("underline", cfiRange, data, cb, className, styles, cfiRangeText);
 	}
 
 	/**
@@ -152,9 +156,10 @@ class Annotations {
 	 * @param {EpubCFI} cfiRange EpubCFI range to attach annotation to
 	 * @param {object} data Data to assign to annotation
 	 * @param {function} cb Callback after annotation is clicked
+	 * @param {EpubCFI} cfiRangeText EpubCFI range text to attach annotation to
 	 */
-	mark (cfiRange, data, cb) {
-		return this.add("mark", cfiRange, data, cb);
+	mark (cfiRange, data, cb, cfiRangeText) {
+		return this.add("mark", cfiRange, data, cb, cfiRangeText);
 	}
 
 	/**
@@ -162,7 +167,6 @@ class Annotations {
 	 */
 	each () {
 		const annotations = [...this.highlights, ...this.underlines, ...this.marks];
-
 		return annotations;
 	}
 
@@ -227,6 +231,7 @@ class Annotations {
  * @param {function} [options.cb] Callback after annotation is clicked
  * @param {string} className CSS class to assign to annotation
  * @param {object} styles CSS styles to assign to annotation
+ * @param {EpubCFI} options.cfiRangeText EpubCFI range text to attach annotation to
  * @returns {Annotation} annotation
  */
 class Annotation {
@@ -238,10 +243,12 @@ class Annotation {
 		sectionIndex,
 		cb,
 		className,
-		styles
+		styles,
+		cfiRangeText,
 	}) {
 		this.type = type;
 		this.cfiRange = cfiRange;
+		this.cfiRangeText = cfiRangeText;
 		this.data = data;
 		this.sectionIndex = sectionIndex;
 		this.mark = undefined;
@@ -304,15 +311,15 @@ class Annotation {
 	 * @param {View} view
 	 */
 	attach (view) {
-		let {cfiRange, data, type, mark, cb, className, styles} = this;
+		let {cfiRange, cfiRangeText, data, type, mark, cb, className, styles} = this;
 		let result;
 
 		if (type === "highlight") {
-			result = view.highlight(cfiRange, data, cb, className, styles);
+			result = view.highlight(cfiRange, data, cb, className, styles, cfiRangeText);
 		} else if (type === "underline") {
-			result = view.underline(cfiRange, data, cb, className, styles);
+			result = view.underline(cfiRange, data, cb, className, styles, cfiRangeText);
 		} else if (type === "mark") {
-			result = view.mark(cfiRange, data, cb, className, styles);
+			result = view.mark(cfiRange, data, cb, className, styles, cfiRangeText);
 		}
 
 		this.mark = result;
